@@ -11,9 +11,11 @@ Hi every DD~~~
 - Java 8
 - python 3.5.6
 - Linux 4.19
+- mongodb
 
 **For contributer:**
 
+- update your twi account or google account meta info in meta.json, I will delete this after all finish, and mark this project as open
 - plz use vscode editor for py repo, and IntelliJ for java repo
 - plz make sure pylint and autopep8 is on, and follower it's code lint and name rule as possible, **just for convience of merge code.** any white list setting should be shared with us
 - use maven not gradle for java user
@@ -22,8 +24,14 @@ Hi every DD~~~
 
 ---------------------------------------
 
-Generally speaking, this project has 4 phase
+## File Structure
 
+- `/python` : python source file
+- `meta.json`: all configuration, Auth info.
+
+---------------------------------------
+
+Generally speaking, this project has 4 phase
 
 
 ## Phase I: vtuber detector

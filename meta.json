@@ -1,0 +1,17 @@
+{
+    "twitter": {
+        "auth": [
+            {
+                "consumer_key": "tP9nR3MCrPwGozopOkA3fPv2H",
+                "consumer_secret": "UNInHADCrtTIBOycqoq2FpiTrqtTfOuuBFMrcXaNjqWe6YnlFS",
+                "oauth_token": "967953601845972993-on32shOZoK3pSZKNNyThNJ9xTvcQMaE",
+                "oauth_token_secret": "tyaabJMFJ3d1EN7r66C7DaDGNuZuQyVc1XMpwOVd9kXgD"
+            }
+        ],
+        "seed": "shirakamifubuki",
+        "vtb_max": 200
+    },
+    "mongo": {
+        "addr": "mongodb://localhost:27017/"
+    }
+}
