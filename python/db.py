@@ -77,7 +77,7 @@ class UseCache(object):
             else:
                 key = args[-1]
 
-            found = self.db.checkCacheById(req, key)
+            found = self.db.checkCache(req, key)
             if found is not None:
                 data = found['data']
 

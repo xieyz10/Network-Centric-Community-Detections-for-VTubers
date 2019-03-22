@@ -28,6 +28,7 @@ Hi every DD~~~
 
 - `/python` : python source file
 - `meta.json`: all configuration, Auth info.
+- `/data`: folder for harvested data
 
 ---------------------------------------
 
@@ -37,9 +38,10 @@ Generally speaking, this project has 4 phase
 ## Phase I: vtuber detector
 
  A script can find virtual youtuber according to twitter friends of a known *"seed"* vtuber.
-
  
- **progress:** >>>>>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  `WORKING`
+ data will be saved to `/data`
+ 
+ **progress:** >>>>>> `PASSING`
 
 
 ## Phase II: data harvest

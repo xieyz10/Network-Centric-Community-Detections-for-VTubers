@@ -8,10 +8,13 @@
                 "oauth_token_secret": "tyaabJMFJ3d1EN7r66C7DaDGNuZuQyVc1XMpwOVd9kXgD"
             }
         ],
-        "seed": "shirakamifubuki",
-        "vtb_max": 200
+        "seed": "958737597336928256",
+        "vtb_max": 500
     },
     "mongo": {
         "addr": "mongodb://localhost:27017/"
+    },
+    "datapath": {
+        "img": ""
     }
 }
