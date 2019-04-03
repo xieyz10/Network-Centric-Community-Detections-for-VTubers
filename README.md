@@ -38,6 +38,8 @@ Generally speaking, this project has 4 phase
 ## Phase I: vtuber detector
 
  A script can find virtual youtuber according to twitter friends of a known *"seed"* vtuber.
+
+ actualy I get all my vtuber list from a third party data source [vtuber-post](https://vtuber-post.com/database/)
  
  data will be saved to `/data`
  
@@ -46,6 +48,13 @@ Generally speaking, this project has 4 phase
 
 ## Phase II: data harvest
 
+create a social network (undirected map with value edge) based on following things and the importance is from high to low 
+- live together(though youtube api)
+- twitter interactive(only one month data will be used)
+
+comment similarity of youtube will alse be collected, this will not be shows in graph but will be use in modeling
+
+**progress:** >>>>>> `FAILING`
 
 ## Phase III: Build Model & Data analysis
 

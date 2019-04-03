@@ -11,6 +11,9 @@
         "seed": "958737597336928256",
         "vtb_max": 500
     },
+    "youtube": {
+        "credential_file": "client_secret_974874009372-ssl9fmjep6jvu6sur8nbeqea6mv2hpbu.apps.googleusercontent.com.json" 
+    },
     "mongo": {
         "addr": "mongodb://localhost:27017/"
     },

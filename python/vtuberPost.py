@@ -14,6 +14,7 @@ from urllib import request
 import json
 from functools import reduce
 import operator
+import re
 
 DATA_SOURCE_HOST = "https://vtuber-post.com/database/"
 
@@ -28,6 +29,15 @@ def findAllVtbInPage(page):
         name_node = vtb_nodes.find('p', class_='name')
         vtb['name'] = name_node.a.contents[0]
         vtb['detail_url'] = name_node.a['href']
+        # get detail page
+        with request.urlopen(DATA_SOURCE_HOST+vtb['detail_url']) as res:
+            detail_page = BeautifulSoup(res.read())
+            # info_node = detail_page.find('div', class_='vtuber_detail')
+            twi_node = detail_page.find_all(
+                'a', href=re.compile('twitter.com'))[1]
+            twi_name = twi_node.contents[0]
+            vtb['twi_name'] = twi_name
+            print(twi_name)
         channel_node = vtb_nodes.find('p', class_='channel')
         vtb['channel'] = channel_node.a.contents[0]
         vtb['channel_url'] = channel_node.a['href']
@@ -49,9 +59,9 @@ def findAllVtbInPage(page):
         vtb['upload'] = int(upload_str.replace(',', ''))
         vlist.append(vtb)
         # download thumbnil
-        thumb_node = vtb_nodes.find('img')
-        thumb_url = "../data/thumbnil/"+vtb['name'].replace('/', '_')+".jpg"
-        request.urlretrieve(thumb_node['src'], thumb_url)
+        # thumb_node = vtb_nodes.find('img')
+        # thumb_url = "../data/thumbnil/"+vtb['name'].replace('/', '_')+".jpg"
+        # request.urlretrieve(thumb_node['src'], thumb_url)
     return vlist
 
 
@@ -74,8 +84,8 @@ def getAllVtber():
     page_num = max_counts // 100
     pages_content = []
     # get all pages
-    search_req = 'keyword=&startDate=&endDate=&office=&order=7&limit=100&collabo=&projects=&country=&non_movie=&fav=&colabo_genre_h=&customer_h=&prefectures_h=&genre_h=&model_h=&attribute_h=&creature_h=&job_h=&appearance_h=&searchFlg=0&page={}&pageFlg=1'
-    for p in range(page_num):
+    search_req = 'keyword=&startDate=&endDate=&office=&order=7&limit=100&collabo=&projects=&country=&non_movie=1&fav=&colabo_genre_h=&customer_h=&prefectures_h=&genre_h=&model_h=&attribute_h=&creature_h=&job_h=&appearance_h=&searchFlg=0&page={}&pageFlg=1'
+    for p in range(10):
         req = request.Request(
             DATA_SOURCE_HOST, data=search_req.format(p).encode())
         with opener.open(req) as res:
@@ -84,6 +94,7 @@ def getAllVtber():
             pages_content.append(BeautifulSoup(html_data))
     vtbs = list(
         reduce(operator.add, (map(lambda p: findAllVtbInPage(p), pages_content))))
+    # save to  file
     with open('../data/vtuber.json', 'w+') as out:
         out.write(json.dumps(vtbs, ensure_ascii=False))
 

@@ -4,13 +4,12 @@ strictly, not all,  at most 200 vtuber will be saved to result.
 
 This script will use BFS to search vtuber form a given "seed"
 
+TODO: pack into class
+
 @Author Yihao Sun <stargazermiao@gmail.com>
 
 '''
 from sys import maxsize as maxint
-import json
-import urllib.request
-
 import twitter
 
 from util import try_until_success, load_config
@@ -27,7 +26,8 @@ twiAuthList = list(map(lambda a: twitter.oauth.OAuth(
     a["oauth_token"], a["oauth_token_secret"],
     a["consumer_key"], a["consumer_secret"]), authlist))
 
-special = ['914724274274832384', '803480007775383552', '1019885045933211648', '984028782175629314']
+special = ['914724274274832384', '803480007775383552',
+           '1019885045933211648', '984028782175629314']
 black = [746964642660966403]
 
 twiList = list(map(lambda a: twitter.Twitter(auth=a), twiAuthList))
@@ -45,7 +45,7 @@ class UserNotFoundException(Exception):
 @UseCache(db=db, keyword='user_id')
 def getUserProfile(apilist, user_id=''):
     '''
-    get the profile of a user with given screen_name
+    get the profile of a user with given id
     '''
     def helper():
         res = None
@@ -57,6 +57,26 @@ def getUserProfile(apilist, user_id=''):
                 pass
         if res is None:
             raise UserNotFoundException(user_id)
+        return res
+    res = try_until_success(helper)
+    return res
+
+
+@UseCache(db=db, keyword='screen_name')
+def getUserProfileByName(apilist, screen_name=''):
+    '''
+    get the profile of a user with given screen_name
+    '''
+    def helper():
+        res = None
+        for api in apilist:
+            try:
+                res = api.users.show(screen_name=screen_name, cursor=-1)
+                break
+            except Exception:
+                pass
+        if res is None:
+            raise UserNotFoundException(screen_name)
         return res
     res = try_until_success(helper)
     return res
@@ -140,19 +160,17 @@ def isVtuber(profile):
         return False
     if profile['description'].lower().find('goo.gl/') > 0:
         return True
-    # if str(profile['description'].find('VTuber')) > 0:
-    #     return True
-    # if profile['description'].lower().find('Youtuber') > 0:
-    #     return True
     if str(profile['entities']).find(channel_uri) > 0:
         return True
     else:
         return False
 
+
 def sortUserByFollowers(users, count):
     if count is -1:
         return sorted(users, key=lambda u: u['followers_count'], reverse=True)
     return sorted(users, key=lambda u: u['followers_count'])[:count]
+
 
 def bfsFinder(seed, vtbMaxNum):
     print("seed is " + str(seed))
@@ -179,20 +197,5 @@ def bfsFinder(seed, vtbMaxNum):
                 result[p['id']] = p
                 count = count + 1
                 next_level.append(p['id'])
-                
+
     return result
-
-
-if __name__ == "__main__":
-    # load configure
-    vtbs = bfsFinder(vtbSeed, vtbMaxNum)
-    with open("../data/vtuber.json", "w+") as out:
-        vtbs = sortUserByFollowers(vtbs.values(), 500)
-        # for p in vtbs:
-        #     try:
-        #         urllib.request.urlretrieve(
-        #             p['profile_image_url'], 
-        #             "../data/img/"+p["screen_name"].replace('noraml', 'bigger')+".jpg")
-        #     except:
-        #         pass
-        out.write(json.dumps(vtbs, ensure_ascii=False))
