@@ -6,15 +6,14 @@ https://vtuber-post.com/database/
 @Author Yihao Sun <stargazermiao@gmail.com>
 
 '''
-from bs4 import BeautifulSoup
 
 from http import cookiejar
-import urllib
 from urllib import request
 import json
 from functools import reduce
 import operator
 import re
+from bs4 import BeautifulSoup
 
 DATA_SOURCE_HOST = "https://vtuber-post.com/database/"
 
