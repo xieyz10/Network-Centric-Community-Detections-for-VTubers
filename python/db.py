@@ -18,14 +18,18 @@ TODO: use grid fs to store, cause profile many very large!
 @Author Yihao Sun <stargazermiao@gmail.com>
 
 '''
-from pymongo import MongoClient
 from functools import wraps
+from pymongo import MongoClient
 # import gridfs
 
 MAX_BSON_SIZE = 800000
 
 
 class Mongo:
+    '''
+    abstract class for database operation
+    '''
+
     def __init__(self, host, db):
         self.client = MongoClient(host)
         self.db = self.client[db]
@@ -44,7 +48,16 @@ class Mongo:
         return data
 
     def saveBulkToDoc(self, doc_name, data):
-        self.db[doc_name].save_many(data)
+        self.db[doc_name].insert_many(data)
+
+    def saveOneToDoc(self, doc_name, data):
+        self.db[doc_name].insert_one(data)
+
+    def updateOne(self, doc_name, query, change):
+        self.db[doc_name].find_one_and_update(
+            query,
+            {'$set': change}
+        )
 
     def loadWholeDoc(self, doc_name):
         '''
@@ -53,18 +66,28 @@ class Mongo:
         '''
         return self.db[doc_name].find()
 
+    def loadOne(self, doc_name, q):
+        return self.db[doc_name].find_one(q)
+
+    def cacheDrop(self):
+        '''
+        clean the cache
+        this should be called periodicaly
+        '''
+        self.cacheDb.drop()
+
 
 class UseCache:
     '''
     an decorator check whether a request is already cached
     this will decrease the request frequency because twitter
-    limit the requset number per time window 
+    limit the requset number per time window
 
     keyword is the key argument name in sign of targer function
     default key is the last one of arg list.
     if key is not found in kwargs, default value will be used.
 
-    eg: 
+    eg:
     @UseCache(db, keyword)
     getFollowerIds(.....)
     '''

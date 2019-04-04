@@ -39,8 +39,9 @@ Generally speaking, this project has 4 phase
 
  A script can find virtual youtuber according to twitter friends of a known *"seed"* vtuber.
 
- actualy I get all my vtuber list from a third party data source [vtuber-post](https://vtuber-post.com/database/)
- 
+ actualy I get all my vtuber list from third party data source 
+ - [vtuber-post](https://vtuber-post.com/database/)
+ - [daifuku](https://mamedaifuku.sakura.ne.jp/)
  data will be saved to `/data`
  
  **progress:** >>>>>> `PASSING`
