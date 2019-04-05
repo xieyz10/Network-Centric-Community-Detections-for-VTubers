@@ -17,7 +17,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from db import Mongo,UseCache
+from db import Mongo, UseCache
 from util import load_config
 
 CONFIG = load_config()
@@ -28,6 +28,8 @@ API_VERSION = 'v3'
 
 CLIENT_SECRETS_FILE = "client_secret_405709008166-k5os3m7treou9nbbqos796upceqe2pm8.apps.googleusercontent.com.json"
 DATABASE = Mongo(CONFIG["mongo"]["addr"], 'youtube')
+
+
 class YouTube:
     '''
     this is the manager entity for  youtube api operation
@@ -68,19 +70,19 @@ class YouTube:
             result = result + response['items']
         return result
 
-    #@UseCache(db=DATABASE, keyword='video_id')
+    @UseCache(db=DATABASE, keyword='video_id')
     def get_video_detail(self, video_id):
         '''
         get the detail of a video, the snippet is not
         enough, a full description will be useful to
         analysis
         '''
-        part = 'snippet,statistics,topicDetails'
+        part = 'snippet'
         # pylint: disable=maybe-no-member
         response = self.service.videos().list(
             part=part,
             id=video_id).execute()
-        return response['items']
+        return response
 
     def search_live(self, channel_id):
         '''
@@ -103,38 +105,59 @@ class YouTube:
             return live_info
         return None
 
-# def extract_id_from_snippt(video):
+
+def update_video_detail(client):
+    # read all data out
+    videos = DATABASE.loadWholeDoc('videos')
+    ids = []
+    for v in videos:
+        ids.append(v['videoId'])
+    for i in range(0, len(ids), 50):
+        ids_str = ','.join(ids[i: i+50])
+        res = client.get_video_detail(ids_str)['items']
+        # update database
+        for d in res:
+            # some video do not have tags....
+            if 'tags' in d['snippet']:
+                tags = d['snippet']['tags']
+            else:
+                tags = []
+            DATABASE.updateOne(
+                'videos',
+                {'videoId': d['id']},
+                {'description': d['snippet']['description'],
+                 'tags': tags}
+            )
 
 
 if __name__ == "__main__":
     CLIENT = YouTube(CLIENT_SECRETS_FILE)
     # read all vtuber data in
-    with open('../data/vtuber.json') as vtb_file:
-        data = vtb_file.read()
-        vtbs = json.loads(data)[:500]
-    # update the vtuber info in data base
-    # DATABASE.saveBulkToDoc('vtuber', vtbs)
-    # get the page of each vtuber
-    for v in vtbs:
-        channel_url = v['channel_url']
-        chan_id = channel_url.split('/')[-1]
-        video_snippt = CLIENT.get_channel_videos(chan_id)
-        ids = []
-        for v in video_snippt:
-            try:
-                ids.append(v['id']['videoId'])
-            except:
-                print(v)
-        time.sleep(60)
-        # fectch the detail of each videos page by page
-        print(ids)
-        videos = []
-        for i in range(0, len(video_snippt), 50):
-            ids_str = ','.join(ids[i: i+25])
-            res = CLIENT.get_video_detail(ids)
-            videos = videos + res
-        # persist to data base
-        print(videos)
-        time.sleep(60)
-        DATABASE.saveOneToDoc(
-            'videos', {'channel_id': chan_id, 'data': videos})
+    # with open('../data/vtuber.json') as vtb_file:
+    #     data = vtb_file.read()
+    #     vtbs = json.loads(data)[:500]
+
+    # for v in vtbs:
+    #     channel_url = v['channel_url']
+    #     chan_id = channel_url.split('/')[-1]
+    #     video_snippt = CLIENT.get_channel_videos(chan_id)
+    #     ids = []
+    #     for v in video_snippt:
+    #         try:
+    #             ids.append(v['id']['videoId'])
+    #         except:
+    #             print(v)
+    #     time.sleep(60)
+    #     # fectch the detail of each videos page by page
+    #     print(ids)
+    #     videos = []
+    #     for i in range(0, len(video_snippt), 50):
+    #         ids_str = ','.join(ids[i: i+25])
+    #         res = CLIENT.get_video_detail(ids)
+    #         videos = videos + res
+    #     # persist to data base
+    #     print(videos)
+    #     time.sleep(60)
+    #     DATABASE.saveOneToDoc(
+    #         'videos', {'channel_id': chan_id, 'data': videos})
+    update_video_detail(CLIENT)

@@ -62,3 +62,28 @@ comment similarity of youtube will alse be collected, this will not be shows in 
 
 ## Phase VI: Visualization
 
+
+--------------------------
+
+# HOW TO SET UP ENV
+
+### python
+
+For mac:
+``` 
+$brew install pyenv
+# after you intall set environment variable in your ~/.bash_profile
+$pyenv install 3.5.6
+$pyenv local 3.5.6
+# enter root folder of project
+$pip install -r requirements.txt
+```
+
+### MongoDB
+```
+# if docker is not installed, plz install docker and docker-compose
+$docker pull mongo
+# make a workspace/data under '~', then back to project folder
+# plz tell me if you need my data
+$. ./run_mongo.sh
+```

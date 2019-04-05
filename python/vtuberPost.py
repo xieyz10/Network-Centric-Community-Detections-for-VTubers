@@ -92,7 +92,7 @@ def getAllVtber():
             # cache[search_req] = html_data
             pages_content.append(BeautifulSoup(html_data))
     vtbs = list(
-        reduce(operator.add, (map(lambda p: findAllVtbInPage(p), pages_content))))
+        reduce(operator.add, (map(findAllVtbInPage, pages_content))))
     # save to  file
     with open('../data/vtuber.json', 'w+') as out:
         out.write(json.dumps(vtbs, ensure_ascii=False))
