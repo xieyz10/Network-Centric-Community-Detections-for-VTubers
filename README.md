@@ -8,7 +8,7 @@ Hi every DD~~~
 --------------------------------------
 
 ## Environment:
-- Java 8
+- Java 8(just because my friend only know java)
 - python 3.5.6
 - Linux 4.19
 - mongodb
@@ -43,6 +43,8 @@ Generally speaking, this project has 4 phase
  - [vtuber-post](https://vtuber-post.com/database/)
  - [daifuku](https://mamedaifuku.sakura.ne.jp/)
  data will be saved to `/data`
+
+ **Some other related data in daifuku and socialblade still need to be collected (eg. comment of vtuber, income, ranking)**
  
  **progress:** >>>>>> `PASSING`
 
@@ -59,9 +61,12 @@ comment similarity of youtube will alse be collected, this will not be shows in 
 
 ## Phase III: Build Model & Data analysis
 
+implememt k-means algorithm to cluster existing networkx-lib with skilearn lib 
 
 ## Phase VI: Visualization
+using java spring boot to just expose the data in mongodb, it is just used as a api-like too for data virtulize
 
+using D3.js to implement a  front end page
 
 --------------------------
 
@@ -80,6 +85,7 @@ $pip install -r requirements.txt
 ```
 
 ### MongoDB
+
 ```
 # if docker is not installed, plz install docker and docker-compose
 $docker pull mongo
@@ -87,3 +93,6 @@ $docker pull mongo
 # plz tell me if you need my data
 $. ./run_mongo.sh
 ```
+
+# Java
+plz use Intellij Idea

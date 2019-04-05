@@ -1,10 +1,8 @@
 '''
-
 this is the script for datasource vtuber-post
 https://vtuber-post.com/database/
 
 @Author Yihao Sun <stargazermiao@gmail.com>
-
 '''
 
 from http import cookiejar
@@ -40,6 +38,7 @@ def findAllVtbInPage(page):
         channel_node = vtb_nodes.find('p', class_='channel')
         vtb['channel'] = channel_node.a.contents[0]
         vtb['channel_url'] = channel_node.a['href']
+        # some one do not have group
         group_node = vtb_nodes.find('p', class_='group')
         try:
             vtb['group'] = group_node.a.contents[0]

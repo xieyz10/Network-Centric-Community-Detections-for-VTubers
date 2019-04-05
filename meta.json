@@ -12,12 +12,15 @@
         "vtb_max": 500
     },
     "youtube": {
-        "credential_file": "client_secret_974874009372-ssl9fmjep6jvu6sur8nbeqea6mv2hpbu.apps.googleusercontent.com.json" 
+        "credential_file": [
+            "client_secret_974874009372-ssl9fmjep6jvu6sur8nbeqea6mv2hpbu.apps.googleusercontent.com.json",
+            "client_secret_405709008166-k5os3m7treou9nbbqos796upceqe2pm8.apps.googleusercontent.com.json"
+        ]
     },
     "mongo": {
         "addr": "mongodb://localhost:27017/"
     },
     "datapath": {
-        "img": ""
+        "thubnil": "data/thumbnil"
     }
 }

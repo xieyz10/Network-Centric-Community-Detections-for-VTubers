@@ -11,7 +11,7 @@ several documents
 NOTICE: the maxium document size of mongodb is 14MB, if data
 or key is too large plz split it or use gridfs
 
-TODO: use grid fs to store, cause profile many very large!
+NOTE: use grid fs to store, cause profile many very large!
       for some application (eg. get all friends profile).
 
 
