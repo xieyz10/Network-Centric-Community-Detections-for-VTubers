@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns:viz="http://www.gexf.net/1.2draft/viz" version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance">
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes class="node" mode="static">
+      <attribute id="0" title="mod" type="long" />
+    </attributes>
+    <meta>
+      <creator>NetworkX 2.2</creator>
+      <lastmodified>08/04/2019</lastmodified>
+    </meta>
+    <nodes>
+      <node id="6" label="HimeHina Channel">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-14.407391846179962" y="46.30095362663269" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="1" label="A.I.Games">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-42.40591526031494" y="54.284125566482544" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="4" label="Siro Channel">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-42.211201786994934" y="8.758261799812317" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="8" label="ヨメミ V-AR チューバー -萌実-">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-76.51523947715759" y="88.94555568695068" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="7" label="ゲーム部プロジェクト">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-17.837168276309967" y="80.83053231239319" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="9" label="月ノ美兎">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-36.81096136569977" y="42.570629715919495" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="0" label="A.I.Channel">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-27.33951508998871" y="13.751748204231262" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="2" label="Kaguya Luna Official">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-27.642467617988586" y="1.3837841339409351" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="3" label="Mirai Akari Project">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-77.87640690803528" y="48.64492118358612" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+      <node id="5" label="ひなたチャンネル (Hinata Channel)">
+        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:size value="20" />
+        <viz:position x="-72.86773324012756" y="0.012426433386281133" z="0" />
+        <attvalues>
+          <attvalue for="0" value="1" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="6" target="7" weight="2" />
+      <edge id="1" source="1" target="7" weight="1" />
+      <edge id="2" source="1" target="2" weight="3" />
+      <edge id="3" source="1" target="3" weight="3" />
+      <edge id="4" source="1" target="5" weight="3" />
+      <edge id="5" source="1" target="8" weight="3" />
+      <edge id="6" source="4" target="2" weight="2" />
+      <edge id="7" source="4" target="8" weight="3" />
+      <edge id="8" source="9" target="5" weight="3" />
+    </edges>
+  </graph>
+</gexf>

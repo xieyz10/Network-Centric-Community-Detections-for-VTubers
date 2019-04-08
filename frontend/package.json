@@ -1,0 +1,25 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "python -m http.server",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/echarts": "^4.1.8",
+    "eslint": "^5.16.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "echarts": "^4.2.1",
+    "jquery": "^3.3.1",
+    "zrender": "^4.0.7"
+  }
+}

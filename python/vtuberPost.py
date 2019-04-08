@@ -4,7 +4,7 @@ https://vtuber-post.com/database/
 
 @Author Yihao Sun <stargazermiao@gmail.com>
 '''
-
+import os
 from http import cookiejar
 from urllib import request
 import json
@@ -57,9 +57,9 @@ def findAllVtbInPage(page):
         vtb['upload'] = int(upload_str.replace(',', ''))
         vlist.append(vtb)
         # download thumbnil
-        # thumb_node = vtb_nodes.find('img')
-        # thumb_url = "../data/thumbnil/"+vtb['name'].replace('/', '_')+".jpg"
-        # request.urlretrieve(thumb_node['src'], thumb_url)
+        thumb_node = vtb_nodes.find('img')
+        thumb_url = "../data/thumbnil/"+vtb['channel'].replace('/', '_')+".jpg"
+        request.urlretrieve(thumb_node['src'], thumb_url)
     return vlist
 
 
@@ -83,7 +83,7 @@ def getAllVtber():
     pages_content = []
     # get all pages
     search_req = 'keyword=&startDate=&endDate=&office=&order=7&limit=100&collabo=&projects=&country=&non_movie=1&fav=&colabo_genre_h=&customer_h=&prefectures_h=&genre_h=&model_h=&attribute_h=&creature_h=&job_h=&appearance_h=&searchFlg=0&page={}&pageFlg=1'
-    for p in range(10):
+    for p in range(12):
         req = request.Request(
             DATA_SOURCE_HOST, data=search_req.format(p).encode())
         with opener.open(req) as res:
@@ -93,9 +93,18 @@ def getAllVtber():
     vtbs = list(
         reduce(operator.add, (map(findAllVtbInPage, pages_content))))
     # save to  file
-    with open('../data/vtuber.json', 'w+') as out:
-        out.write(json.dumps(vtbs, ensure_ascii=False))
+    # with open('../data/vtuber.json', 'w+') as out:
+    #     out.write(json.dumps(vtbs, ensure_ascii=False))
 
+
+def change_file_name():
+    with open('../data/vtuber.json') as f:
+        vtbs = json.loads(f.read())
+    for v in vtbs:
+        original = "../data/thumbnil/"+v['name'].replace('/', '_')+".jpg"
+        new = "../data/thumbnil/"+v['channel'].replace('/', '_')+".jpg" 
+        os.execv('mv', [original, new])
 
 if __name__ == "__main__":
     getAllVtber()
+    # change_file_name()
