@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
   <!-- Required meta tags -->
@@ -13,13 +13,65 @@
   <script src="node_modules/echarts/dist/echarts.js"></script>
   <script src="node_modules/jquery/dist/jquery.js"></script>
   <script src="node_modules/echarts/dist/extension/dataTool.js"></script>
+
+  <link rel="stylesheet" , href="css/vtuber.css">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
   <title>Hello, world!</title>
 
 </head>
 
-<body>
-  <div id="chart" style="width: 2000px;height: 1000px"></div>
+<body class="d-flex flex-column h-100">
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fix-top">
+      <a class="navbar-brand" href="#">
+        <img class="img-thumbnil" src="data/icon.jpg" width="60" height="60" alt="">
+      </a>
+    </nav>
+  </header>
+  <main role="main" class="flex-shrink-0 fill">
+    <div class="container-fluid h-100">
 
+      <div class="row h-100">
+
+        <!-- the main part for graph pannel -->
+        <div class="col-9">
+          <div id="chart" class="vtb-graph"></div>
+        </div>
+        <!-- this is the info pannel for vtuber -->
+        <div class="col">
+          <div class="row">
+            <h2 class="vtb-name"> A.I. Channel</h2>
+          </div>
+          <div class="row"><img class="img-thumbnail rounded-circle mx-auto d-block vtb-icon"
+              src="data/thumbnil/A.I.Channel.jpg"></div>
+          <div class="row" style="padding-top:40px">
+            <p class="vtb-info-item typewriter"><strong>Kizuna Ai</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="footer mt-auto py-3">
+    <div class="container text-center"> 
+      <strong>powered with &#x2764; </strong> <span class="text-mute">by StarGazerMiao & Friends</span>
+    </div>
+  </footer>
   <script>
     //window.onload = function () {
 
@@ -47,7 +99,7 @@
             }
           };
           node.category = node.attributes.mod;
-          node.symbol = 'image://data/thumbnil/'+node.name+'.jpg';
+          node.symbol = 'image://data/thumbnil/' + node.name + '.jpg';
         });
         option = {
           title: {

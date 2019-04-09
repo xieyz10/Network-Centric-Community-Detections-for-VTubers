@@ -3,7 +3,7 @@ import { dataTool, init } from 'echarts';
 import "echarts/src/chart/graph";
 import "echarts/extension/dataTool";
 
-window.onload = function () {
+function showVtuberGraph () {
 
   var vtbchart = init(document.getElementById("chart"));
 
