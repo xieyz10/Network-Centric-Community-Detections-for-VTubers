@@ -56,19 +56,19 @@
         <!-- this is the info pannel for vtuber -->
         <div class="col">
           <div class="row">
-            <h2 class="vtb-name"> A.I. Channel</h2>
+            <h2 id="vtb-channel" class="vtb-name"> A.I. Channel</h2>
           </div>
-          <div class="row"><img class="img-thumbnail rounded-circle mx-auto d-block vtb-icon"
+          <div class="row"><img id="vtb-icon" class="img-thumbnail rounded-circle mx-auto d-block vtb-icon"
               src="data/thumbnil/A.I.Channel.jpg"></div>
-          <div class="row" style="padding-top:40px">
-            <p class="vtb-info-item typewriter"><strong>Kizuna Ai</strong></p>
+          <div id="vtb-info" class="row" style="padding-top:40px">
+            <p id="vtb-name" class="vtb-info-item typewriter"><strong id="vtb-name">Kizuna Ai</strong></p>
           </div>
         </div>
       </div>
     </div>
   </main>
   <footer class="footer mt-auto py-3">
-    <div class="container text-center"> 
+    <div class="container text-center">
       <strong>powered with &#x2764; </strong> <span class="text-mute">by StarGazerMiao & Friends</span>
     </div>
   </footer>
@@ -77,7 +77,7 @@
 
     var vtbchart = echarts.init(document.getElementById("chart"));
 
-    $.get('data/mock.gexf',
+    $.get('data/vtb.gexf',
       function (xml) {
         vtbchart.hideLoading()
 
@@ -89,17 +89,16 @@
         //   };
         // }
         graph.nodes.forEach(function (node) {
-          console.log(node)
           node.itemStyle = null;
           node.value = node.symbolSize;
-          node.symbolSize *= 2;
+          node.symbolSize /= 2;
           node.label = {
             normal: {
-              show: node.symbolSize > 30
+              show: node.symbolSize > 10
             }
           };
           node.category = node.attributes.mod;
-          node.symbol = 'image://data/thumbnil/' + node.name + '.jpg';
+          // node.symbol = 'image://data/thumbnil/' + node.name + '.jpg';
         });
         option = {
           title: {
@@ -152,6 +151,24 @@
         };
         vtbchart.setOption(option);
       }, 'xml');
+
+    $.getJSON('data/vtuber.json', function (data) {
+      vtbchart.on('click', function (param) {
+        // console.log(param.name)
+        for (let i = 0; i < data.length; i++) {
+          if (param.name == data[i].channel) {
+            console.log(data[i].channel)
+            $('#vtb-channel').text(data[i].channel);
+            $('#vtb-name').text(data[i].name);
+            $('#vtb-name').removeClass('typewriter').addClass('typewriter');
+            img_url = 'data/thumbnil/' + encodeURI(data[i].channel.replace('/', '_')) + '.jpg';
+            $('#vtb-icon').attr('src', img_url).removeClass('vtb-icon').addClass('vtb-icon');
+            break;
+          }
+        }
+      });
+    });
+
       //};
   </script>
   <!-- Optional JavaScript -->

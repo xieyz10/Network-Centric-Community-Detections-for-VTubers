@@ -108,7 +108,7 @@ class YouTube:
 
 def update_video_detail(client):
     # read all data out
-    videos = DATABASE.loadWholeDoc('videos')
+    videos = DATABASE.loadWholeDoc('videosv2')
     ids = []
     for v in videos:
         ids.append(v['videoId'])

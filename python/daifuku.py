@@ -10,7 +10,9 @@ from util import load_config
 
 CONFIG = load_config()
 with request.urlopen('https://mamedaifuku.sakura.ne.jp/live_stream/php/ex_return_video_list_json.php?get_video_list_mode=all') as res:
-    with open('../data/video.json', 'w+') as tmp:
-        tmp.write(res.read().decode())
-        database = Mongo(CONFIG["mongo"]["addr"], 'youtube')
-        database.saveBulkToDoc('videos', json.loads(tmp.read()))
+    # with open('../data/video.json', 'w+') as tmp:
+        # tmp.write(res.read().decode())
+    database = Mongo(CONFIG["mongo"]["addr"], 'youtube')
+    data = res.read().decode()
+    # print(data)
+    database.saveBulkToDoc('videosv2', json.loads(data))
