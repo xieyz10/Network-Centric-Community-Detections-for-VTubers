@@ -82,7 +82,7 @@
         </attvalues>
       </node>
       <node id="5" label="ひなたチャンネル (Hinata Channel)">
-        <viz:color a="0" b="255" g="0" r="0" />
+        <viz:color a="0" b="255" g="255" r="0" />
         <viz:size value="20" />
         <viz:position x="-72.86773324012756" y="0.012426433386281133" z="0" />
         <attvalues>
