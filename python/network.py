@@ -5,6 +5,7 @@ at this time, co-live and times will be used as edge weight of
 
 '''
 import re
+import random
 
 import networkx
 import matplotlib.pyplot as plt
@@ -42,7 +43,7 @@ def gen_mock_data():
         graph.node[v]['viz']['size'] = 20
         graph.node[v]['viz']['position'] = {
             'x': pos[v][0] * (-100), 'y': pos[v][1] * 100, 'z': 0}
-        graph.node[v]["viz"]['color'] = {'r': 0, 'g': 0, 'b': 255, 'a': 0}
+        graph.node[v]["viz"]['color'] = {'r': 255, 'g': 192, 'b': 201, 'a': 1}
         print(graph.node[v])
         counter = counter + 1
 
@@ -65,11 +66,11 @@ def gen_mock_data():
 def add_node(channel, graph):
     global node_count
     if not graph.has_node(channel):
-        graph.add_node(channel, viz={}, mod=1, id=0)
+        graph.add_node(channel, viz={}, mod=-1, id=0)
         graph.node[channel]['id'] = node_count
         graph.node[channel]['viz']['size'] = 20
         graph.node[channel]["viz"]['color'] = {
-            'r': 0, 'g': 0, 'b': 255, 'a': 0}
+            'r': 255, 'g': 192, 'b': 201, 'a': 1}
         node_count += 1
 
 
@@ -111,9 +112,9 @@ def create_graph():
     vgraph = networkx.Graph()
     client = Mongo(CONFIG["mongo"]["addr"], 'youtube')
     vtubers = client.loadWholeDoc('vtuber')
-    video_num = client.loadWholeDoc('videos').count()
+    video_num = client.loadWholeDoc('videosv2').count()
     for i in range(0, video_num, PAGE_SIZE):
-        v_page = client.loadWholeDoc('videos').skip(i).limit(PAGE_SIZE)
+        v_page = client.loadWholeDoc('videosv2').skip(i).limit(PAGE_SIZE)
         for v in v_page:
             owner = v['channelId']
             try:
@@ -134,8 +135,16 @@ def create_graph():
         except:
             continue
         name_dict[channel_id] = name
+
     # update the position and size of node in graph
     pos = networkx.random_layout(vgraph)
+
+    # clean out all node who is not in vtuber list
+    remove_list = []
+    for _n in vgraph.nodes():
+        if not _n in name_dict.keys():
+            remove_list.append(_n)
+    vgraph.remove_nodes_from(remove_list)
 
     for _n in vgraph.nodes():
         vgraph.node[_n]['viz']['position'] = {
@@ -144,8 +153,31 @@ def create_graph():
         }
         vgraph.node[_n]['viz']['size'] = vgraph.degree[_n]
     vgraph = networkx.relabel_nodes(vgraph, name_dict)
-    networkx.write_gexf(vgraph, '../data/vtb.gexf')
+    # networkx.write_gexf(vgraph, '../data/vtb.gexf')
+    return vgraph
+
+
+def max_clique_graph(vgraph):
+    print("total number of node is " + str(len(vgraph.node)))
+    cliques = networkx.find_cliques(vgraph)
+    # color all node into different
+    mod = 0
+    for clik in cliques:
+        if len(clik) < 10:
+            continue
+        _r = random.randint(0, 255)
+        _g = random.randint(0, 255)
+        _b = random.randint(0, 255)
+        for _n in clik:
+            vgraph.node[_n]['mod'] = mod
+            vgraph.node[_n]["viz"]['color'] = {
+                'r': _r, 'g': _g, 'b': _b, '1': 1}
+            print(vgraph.node[_n]["viz"]['color'])
+        mod += 1
+    print("total clique is " + str(mod))
 
 
 if __name__ == "__main__":
-    create_graph()
+    vgraph = create_graph()
+    max_clique_graph(vgraph)
+    networkx.write_gexf(vgraph, '../data/Max-Clique.gexf')

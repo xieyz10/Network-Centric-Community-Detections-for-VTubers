@@ -3,8 +3,32 @@
     <header>
       <nav class="navbar navbar-expand-md navbar-light bg-light fix-top">
         <a class="navbar-brand" href="#">
-          <img class="img-thumbnil" src="data/icon.jpg" width="60" height="60" alt>
+          <img class="img-thumbnil" src="data/icon.jpg" width="40" height="40" alt>
         </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Vtuber DashBoard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+            <li class="nav-item active">
+              <!-- <a class="nav-link" href="#">
+                Contorler
+                <span class="sr-only">(current)</span>
+              </a>-->
+              <a
+                class="btn btn-outline-success my-2 my-sm-0"
+                data-toggle="collapse"
+                href="#filter-panel"
+                role="button"
+                aria-expanded="false"
+                aria-controls="filter-panel"
+              >Filter</a>
+            </li>
+          </ul>
+        </div>
       </nav>
     </header>
     <main role="main" class="flex-shrink-0 fill">
@@ -16,6 +40,7 @@
               v-bind:graphData="graphData"
               v-bind:vtbData="vtbData"
               v-on:setCurrentVtb="setCurrentVtb"
+              v-on:setGraph="setGraph"
             ></vtb-graph>
           </div>
           <!-- this is the info pannel for vtuber -->
@@ -28,7 +53,7 @@
 
     <footer class="footer mt-auto py-3">
       <div class="container text-center">
-        <strong>powered with &#x2764;</strong>
+        <strong>Powered With &#x2764;</strong>
         <span class="text-mute">by StarGazerMiao & Friends</span>
       </div>
     </footer>
@@ -63,13 +88,24 @@ export default {
       this.currentVtb = vtb;
       this.thumbnil =
         "data/thumbnil/" + encodeURI(vtb.channel.replace("/", "_")) + ".jpg";
+    },
+    setGraph: function(g) {
+      let _this = this
+      let graphURI = "data/" + g + ".gexf";
+      axios({
+        method: "get",
+        url: graphURI,
+        responseType: "xml"
+      }).then(function(res) {
+        _this.graphData = res.data;
+      });
     }
   },
   mounted: function() {
     let _this = this;
     axios({
       method: "get",
-      url: "data/vtb.gexf",
+      url: "data/No-Clusting.gexf",
       responseType: "xml"
     }).then(function(res) {
       _this.graphData = res.data;
@@ -119,6 +155,6 @@ code {
 }
 
 .fill {
-  min-height: 90vh;
+  min-height: 87vh;
 }
 </style>
