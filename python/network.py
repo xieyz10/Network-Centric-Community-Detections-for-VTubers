@@ -6,6 +6,7 @@ at this time, co-live and times will be used as edge weight of
 '''
 import re
 import random
+import math
 
 import networkx
 import matplotlib.pyplot as plt
@@ -23,6 +24,14 @@ CHANNEL_URL = list(map(re.compile, CHANNEL_URL))
 
 node_count = 0
 # here is just some fake data for test
+
+
+def sigmoid(x):
+    '''
+    sigmoid function to give a logistic like dist
+    '''
+    print(1 / (1 + math.exp(-x)))
+    return 1 / (1 + math.exp(-x))
 
 
 def gen_mock_data():
@@ -128,6 +137,7 @@ def create_graph():
     # plt.show()
     # split the name from vtb list
     name_dict = {}
+    vtb_dict = {}
     for v in vtubers:
         name = v['channel']
         try:
@@ -135,6 +145,7 @@ def create_graph():
         except:
             continue
         name_dict[channel_id] = name
+        vtb_dict[channel_id] = v
 
     # update the position and size of node in graph
     pos = networkx.random_layout(vgraph)
@@ -148,10 +159,13 @@ def create_graph():
 
     for _n in vgraph.nodes():
         vgraph.node[_n]['viz']['position'] = {
-            'x': pos[_n][0] * (-100),
+            'x': pos[_n][0] * (-100) * 1.5,
             'y': pos[_n][1] * 100, 'z': 0
         }
-        vgraph.node[_n]['viz']['size'] = vgraph.degree[_n]
+        # print(math.log2(vtb_dict[_n]['regsit']))
+        #vgraph.node[_n]['viz']['size'] = vgraph.degree[_n]
+        vgraph.node[_n]['viz']['size'] = (
+            math.log2(vtb_dict[_n]['regsit'])-10)*10
     vgraph = networkx.relabel_nodes(vgraph, name_dict)
     # networkx.write_gexf(vgraph, '../data/vtb.gexf')
     return vgraph
@@ -163,8 +177,10 @@ def max_clique_graph(vgraph):
     # color all node into different
     mod = 0
     for clik in cliques:
-        if len(clik) < 10:
+
+        if len(clik) < 12:
             continue
+        print(clik)
         _r = random.randint(0, 255)
         _g = random.randint(0, 255)
         _b = random.randint(0, 255)
@@ -172,7 +188,6 @@ def max_clique_graph(vgraph):
             vgraph.node[_n]['mod'] = mod
             vgraph.node[_n]["viz"]['color'] = {
                 'r': _r, 'g': _g, 'b': _b, '1': 1}
-            print(vgraph.node[_n]["viz"]['color'])
         mod += 1
     print("total clique is " + str(mod))
 

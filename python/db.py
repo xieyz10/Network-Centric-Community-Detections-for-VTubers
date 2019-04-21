@@ -59,6 +59,14 @@ class Mongo:
             {'$set': change}
         )
 
+    def lookup(self, collection_name, query, limit=100):
+        '''
+        seach for data in database, with a given limitation
+        '''
+        return self.db[collection_name].find(query).limit(limit)
+    # def aggregate(self, doc_name, query):
+    #     self.db
+
     def loadWholeDoc(self, doc_name):
         '''
         this will return all data in a mongodb collection
