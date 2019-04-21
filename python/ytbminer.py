@@ -26,7 +26,7 @@ SCOPES = ['https://www.googleapis.com/auth/youtube.force-ssl']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-CLIENT_SECRETS_FILE = "client_secret_405709008166-k5os3m7treou9nbbqos796upceqe2pm8.apps.googleusercontent.com.json"
+CLIENT_SECRETS_FILE = "client_secret_974874009372-e5f329adu30h1j8qmtc75r5vvgdngvbr.apps.googleusercontent.com.json"
 DATABASE = Mongo(CONFIG["mongo"]["addr"], 'youtube')
 
 
@@ -123,7 +123,7 @@ def update_video_detail(client):
             else:
                 tags = []
             DATABASE.updateOne(
-                'videos',
+                'videosv2',
                 {'videoId': d['id']},
                 {'description': d['snippet']['description'],
                  'tags': tags}
