@@ -262,6 +262,12 @@ export default {
   height: 100%;
 }
 
+<<<<<<< HEAD
+  .fill {
+    width: 100%;
+    height: 80%;
+  }
+=======
 .fill {
   width: 100%;
   height: 50%;
@@ -273,4 +279,5 @@ export default {
 button {
   margin: 10px;
 }
+>>>>>>> 0e696e0016fb8ce85dd79e099acc7b70f001ce46
 </style>
