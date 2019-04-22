@@ -102,8 +102,9 @@ def change_file_name():
         vtbs = json.loads(f.read())
     for v in vtbs:
         original = "../data/thumbnil/"+v['name'].replace('/', '_')+".jpg"
-        new = "../data/thumbnil/"+v['channel'].replace('/', '_')+".jpg" 
+        new = "../data/thumbnil/"+v['channel'].replace('/', '_')+".jpg"
         os.execv('mv', [original, new])
+
 
 if __name__ == "__main__":
     getAllVtber()
