@@ -15,6 +15,7 @@
         <strong id="vtb-name">{{vtb.name}}</strong>
       </p>
     </div>
+    
   </div>
 </template>
 
